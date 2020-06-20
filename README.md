@@ -1,6 +1,10 @@
-# LiquidBounce
-A free mixin-based injection hacked-client for Minecraft using Minecraft Forge.
+# LiquidHUD
+A fork of the hack-client LiquidBounce, which removes the hack-part.
 
+## Changes this fork makes
+* Removes all hacks
+
+# Readme from the original client, LiquidBounce
 Website: https://liquidbounce.net \
 Forum: https://forum.ccbluex.net/index.php \
 Discord: https://discord.gg/gdQ82He \
