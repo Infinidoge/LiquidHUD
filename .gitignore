@@ -1,5 +1,5 @@
 .idea/*
-!.idea/runConfigurations/
+.idea/runConfigurations/
 *.iml
 *.ipr
 *.iws
