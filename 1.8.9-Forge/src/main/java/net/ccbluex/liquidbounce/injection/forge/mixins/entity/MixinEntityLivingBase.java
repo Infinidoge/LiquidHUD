@@ -7,10 +7,6 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.entity;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.JumpEvent;
-import net.ccbluex.liquidbounce.features.module.modules.movement.AirJump;
-import net.ccbluex.liquidbounce.features.module.modules.movement.LiquidWalk;
-import net.ccbluex.liquidbounce.features.module.modules.movement.NoJumpDelay;
-import net.ccbluex.liquidbounce.features.module.modules.render.AntiBlind;
 import net.minecraft.block.Block;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.EntityLivingBase;
@@ -87,23 +83,12 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
 
     @Inject(method = "onLivingUpdate", at = @At("HEAD"))
     private void headLiving(CallbackInfo callbackInfo) {
-        if (LiquidBounce.moduleManager.getModule(NoJumpDelay.class).getState())
-            jumpTicks = 0;
+
     }
 
     @Inject(method = "onLivingUpdate", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/EntityLivingBase;isJumping:Z", ordinal = 1))
     private void onJumpSection(CallbackInfo callbackInfo) {
-        if (LiquidBounce.moduleManager.getModule(AirJump.class).getState() && isJumping && this.jumpTicks == 0) {
-            this.jump();
-            this.jumpTicks = 10;
-        }
 
-        final LiquidWalk liquidWalk = (LiquidWalk) LiquidBounce.moduleManager.getModule(LiquidWalk.class);
-
-        if(liquidWalk.getState() && !isJumping && !isSneaking() && isInWater() &&
-                liquidWalk.modeValue.get().equalsIgnoreCase("Swim")) {
-            this.updateAITick();
-        }
     }
 
     @Inject(method = "getLook", at = @At("HEAD"), cancellable = true)
@@ -112,11 +97,4 @@ public abstract class MixinEntityLivingBase extends MixinEntity {
             callbackInfoReturnable.setReturnValue(getVectorForRotation(this.rotationPitch, this.rotationYaw));
     }
 
-    @Inject(method = "isPotionActive(Lnet/minecraft/potion/Potion;)Z", at = @At("HEAD"), cancellable = true)
-    private void isPotionActive(Potion p_isPotionActive_1_, final CallbackInfoReturnable<Boolean> callbackInfoReturnable) {
-        final AntiBlind antiBlind = (AntiBlind) LiquidBounce.moduleManager.getModule(AntiBlind.class);
-
-        if((p_isPotionActive_1_ == Potion.confusion || p_isPotionActive_1_ == Potion.blindness) && antiBlind.getState() && antiBlind.getConfusionEffect().get())
-            callbackInfoReturnable.setReturnValue(false);
-    }
 }

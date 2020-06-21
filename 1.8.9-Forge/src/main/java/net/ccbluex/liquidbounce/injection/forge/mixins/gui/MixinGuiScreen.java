@@ -7,23 +7,14 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.features.module.modules.misc.ComponentOnHover;
-import net.ccbluex.liquidbounce.features.module.modules.render.HUD;
-import net.ccbluex.liquidbounce.ui.client.GuiBackground;
-import net.ccbluex.liquidbounce.utils.render.ParticleUtils;
-import net.ccbluex.liquidbounce.utils.render.shader.shaders.BackgroundShader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatStyle;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.input.Mouse;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
@@ -62,62 +53,6 @@ public abstract class MixinGuiScreen {
 
     @Shadow
     protected abstract void drawHoveringText(List<String> textLines, int x, int y);
-
-    @Inject(method = "drawWorldBackground", at = @At("HEAD"))
-    private void drawWorldBackground(final CallbackInfo callbackInfo) {
-        final HUD hud = (HUD) LiquidBounce.moduleManager.getModule(HUD.class);
-
-        if(hud.inventoryParticle.get() && mc.thePlayer != null) {
-            final ScaledResolution scaledResolution = new ScaledResolution(mc);
-            final int width = scaledResolution.getScaledWidth();
-            final int height = scaledResolution.getScaledHeight();
-            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-        }
-    }
-
-    /**
-     * @author CCBlueX
-     */
-    @Inject(method = "drawBackground", at = @At("HEAD"), cancellable = true)
-    private void drawClientBackground(final CallbackInfo callbackInfo) {
-        GlStateManager.disableLighting();
-        GlStateManager.disableFog();
-
-        if(GuiBackground.Companion.getEnabled()) {
-            if (LiquidBounce.INSTANCE.getBackground() == null) {
-                BackgroundShader.BACKGROUND_SHADER.startShader();
-
-                final Tessellator instance = Tessellator.getInstance();
-                final WorldRenderer worldRenderer = instance.getWorldRenderer();
-                worldRenderer.begin(7, DefaultVertexFormats.POSITION);
-                worldRenderer.pos(0, height, 0.0D).endVertex();
-                worldRenderer.pos(width, height, 0.0D).endVertex();
-                worldRenderer.pos(width, 0, 0.0D).endVertex();
-                worldRenderer.pos(0, 0, 0.0D).endVertex();
-                instance.draw();
-
-                BackgroundShader.BACKGROUND_SHADER.stopShader();
-            }else{
-                final ScaledResolution scaledResolution = new ScaledResolution(mc);
-                final int width = scaledResolution.getScaledWidth();
-                final int height = scaledResolution.getScaledHeight();
-
-                mc.getTextureManager().bindTexture(LiquidBounce.INSTANCE.getBackground());
-                GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-                Gui.drawScaledCustomSizeModalRect(0, 0, 0.0F, 0.0F, width, height, width, height, width, height);
-            }
-
-            if (GuiBackground.Companion.getParticles())
-                ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-            callbackInfo.cancel();
-        }
-    }
-
-    @Inject(method = "drawBackground", at = @At("RETURN"))
-    private void drawParticles(final CallbackInfo callbackInfo) {
-        if(GuiBackground.Companion.getParticles())
-            ParticleUtils.drawParticles(Mouse.getX() * width / mc.displayWidth, height - Mouse.getY() * height / mc.displayHeight - 1);
-    }
 
     @Inject(method = "sendChatMessage(Ljava/lang/String;Z)V", at = @At("HEAD"), cancellable = true)
     private void messageSend(String msg, boolean addToChat, final CallbackInfo callbackInfo) {

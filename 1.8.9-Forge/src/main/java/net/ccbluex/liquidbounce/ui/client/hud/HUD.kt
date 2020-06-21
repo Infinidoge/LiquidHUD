@@ -8,7 +8,6 @@ package net.ccbluex.liquidbounce.ui.client.hud
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
 import net.ccbluex.liquidbounce.ui.client.hud.element.elements.*
-import net.ccbluex.liquidbounce.ui.client.hud.element.elements.Target
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.MinecraftInstance
 import net.minecraft.client.gui.ScaledResolution
@@ -35,9 +34,7 @@ open class HUD : MinecraftInstance() {
                 Notifications::class.java,
                 TabGUI::class.java,
                 Text::class.java,
-                ScoreboardElement::class.java,
-                Target::class.java,
-                Radar::class.java
+                ScoreboardElement::class.java
         )
 
         /**

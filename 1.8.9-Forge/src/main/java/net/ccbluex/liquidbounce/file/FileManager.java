@@ -34,7 +34,6 @@ public class FileManager extends MinecraftInstance {
     public final FileConfig clickGuiConfig = new ClickGuiConfig(new File(dir, "clickgui.json"));
     public final AccountsConfig accountsConfig = new AccountsConfig(new File(dir, "accounts.json"));
     public final FriendsConfig friendsConfig = new FriendsConfig(new File(dir, "friends.json"));
-    public final FileConfig xrayConfig = new XRayConfig(new File(dir, "xray-blocks.json"));
     public final FileConfig hudConfig = new HudConfig(new File(dir, "hud.json"));
     public final FileConfig shortcutsConfig = new ShortcutsConfig(new File(dir, "shortcuts.json"));
 
@@ -56,6 +55,7 @@ public class FileManager extends MinecraftInstance {
     /**
      * Setup folder
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void setupFolder() {
         if(!dir.exists()) {
             dir.mkdir();

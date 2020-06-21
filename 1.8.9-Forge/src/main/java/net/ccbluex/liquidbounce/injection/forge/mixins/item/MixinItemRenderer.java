@@ -6,9 +6,6 @@
 package net.ccbluex.liquidbounce.injection.forge.mixins.item;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
-import net.ccbluex.liquidbounce.features.module.modules.combat.KillAura;
-import net.ccbluex.liquidbounce.features.module.modules.render.AntiBlind;
-import net.ccbluex.liquidbounce.features.module.modules.render.SwingAnimation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -97,14 +94,11 @@ public abstract class MixinItemRenderer {
         GlStateManager.pushMatrix();
 
         if(this.itemToRender != null) {
-            final KillAura killAura = (KillAura) LiquidBounce.moduleManager.getModule(KillAura.class);
 
             if(this.itemToRender.getItem() instanceof net.minecraft.item.ItemMap) {
                 this.renderItemMap(abstractclientplayer, f2, f, f1);
-            } else if (abstractclientplayer.getItemInUseCount() > 0 || (itemToRender.getItem() instanceof ItemSword && killAura.getBlockingStatus())) {
-                EnumAction enumaction = killAura.getBlockingStatus() ? EnumAction.BLOCK : this.itemToRender.getItemUseAction();
-
-                switch(enumaction) {
+            } else if (abstractclientplayer.getItemInUseCount() > 0) {
+                switch(this.itemToRender.getItemUseAction()) {
                     case NONE:
                         this.transformFirstPersonItem(f, 0.0F);
                         break;
@@ -123,8 +117,6 @@ public abstract class MixinItemRenderer {
                         this.doBowTransformations(partialTicks, abstractclientplayer);
                 }
             }else{
-                if (!LiquidBounce.moduleManager.getModule(SwingAnimation.class).getState())
-                    this.doItemUsedTransformations(f1);
                 this.transformFirstPersonItem(f, f1);
             }
 
@@ -138,10 +130,4 @@ public abstract class MixinItemRenderer {
         RenderHelper.disableStandardItemLighting();
     }
 
-    @Inject(method = "renderFireInFirstPerson", at = @At("HEAD"), cancellable = true)
-    private void renderFireInFirstPerson(final CallbackInfo callbackInfo) {
-        final AntiBlind antiBlind = (AntiBlind) LiquidBounce.moduleManager.getModule(AntiBlind.class);
-
-        if(antiBlind.getState() && antiBlind.getFireEffect().get()) callbackInfo.cancel();
-    }
 }

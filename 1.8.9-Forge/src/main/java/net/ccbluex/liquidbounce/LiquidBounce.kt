@@ -7,22 +7,13 @@ package net.ccbluex.liquidbounce
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import net.ccbluex.liquidbounce.cape.CapeAPI.registerCapeService
-import net.ccbluex.liquidbounce.discord.ClientRichPresence
 import net.ccbluex.liquidbounce.event.ClientShutdownEvent
 import net.ccbluex.liquidbounce.event.EventManager
 import net.ccbluex.liquidbounce.features.command.CommandManager
 import net.ccbluex.liquidbounce.features.module.ModuleManager
-import net.ccbluex.liquidbounce.features.special.AntiForge
-import net.ccbluex.liquidbounce.features.special.BungeeCordSpoof
-import net.ccbluex.liquidbounce.features.special.DonatorCape
 import net.ccbluex.liquidbounce.file.FileManager
-import net.ccbluex.liquidbounce.script.ScriptManager
-import net.ccbluex.liquidbounce.script.remapper.Remapper.loadSrg
 import net.ccbluex.liquidbounce.tabs.BlocksTab
-import net.ccbluex.liquidbounce.tabs.ExploitsTab
 import net.ccbluex.liquidbounce.tabs.HeadsTab
-import net.ccbluex.liquidbounce.ui.client.altmanager.GuiAltManager
 import net.ccbluex.liquidbounce.ui.client.clickgui.ClickGui
 import net.ccbluex.liquidbounce.ui.client.hud.HUD
 import net.ccbluex.liquidbounce.ui.client.hud.HUD.Companion.createDefault
@@ -51,7 +42,6 @@ object LiquidBounce {
     lateinit var commandManager: CommandManager
     lateinit var eventManager: EventManager
     lateinit var fileManager: FileManager
-    lateinit var scriptManager: ScriptManager
 
     // HUD & ClickGUI
     lateinit var hud: HUD
@@ -63,9 +53,6 @@ object LiquidBounce {
 
     // Menu Background
     var background: ResourceLocation? = null
-
-    // Discord RPC
-    private lateinit var clientRichPresence: ClientRichPresence
 
     /**
      * Execute if client will be started
@@ -83,9 +70,6 @@ object LiquidBounce {
 
         // Register listeners
         eventManager.registerListener(RotationUtils())
-        eventManager.registerListener(AntiForge())
-        eventManager.registerListener(BungeeCordSpoof())
-        eventManager.registerListener(DonatorCape())
         eventManager.registerListener(InventoryUtils())
 
         // Create command manager
@@ -98,24 +82,13 @@ object LiquidBounce {
         moduleManager = ModuleManager()
         moduleManager.registerModules()
 
-        // Remapper
-        try {
-            loadSrg()
-
-            // ScriptManager
-            scriptManager = ScriptManager()
-            scriptManager.loadScripts()
-            scriptManager.enableScripts()
-        } catch (throwable: Throwable) {
-            ClientUtils.getLogger().error("Failed to load scripts.", throwable)
-        }
 
         // Register commands
         commandManager.registerCommands()
 
         // Load configs
         fileManager.loadConfigs(fileManager.modulesConfig, fileManager.valuesConfig, fileManager.accountsConfig,
-                fileManager.friendsConfig, fileManager.xrayConfig, fileManager.shortcutsConfig)
+                fileManager.friendsConfig, fileManager.shortcutsConfig)
 
         // ClickGUI
         clickGui = ClickGui()
@@ -124,23 +97,7 @@ object LiquidBounce {
         // Tabs (Only for Forge!)
         if (hasForge()) {
             BlocksTab()
-            ExploitsTab()
             HeadsTab()
-        }
-
-        // Register capes service
-        try {
-            registerCapeService()
-        } catch (throwable: Throwable) {
-            ClientUtils.getLogger().error("Failed to register cape service", throwable)
-        }
-
-        // Setup Discord RPC
-        try {
-            clientRichPresence = ClientRichPresence()
-            clientRichPresence.setup()
-        } catch (throwable: Throwable) {
-            ClientUtils.getLogger().error("Failed to setup Discord RPC.", throwable)
         }
 
         // Set HUD
@@ -164,9 +121,6 @@ object LiquidBounce {
             ClientUtils.getLogger().error("Failed to check for updates.", exception)
         }
 
-        // Load generators
-        GuiAltManager.loadGenerators()
-
         // Set is starting status
         isStarting = false
     }
@@ -181,8 +135,6 @@ object LiquidBounce {
         // Save all available configs
         fileManager.saveAllConfigs()
 
-        // Shutdown discord rpc
-        clientRichPresence.shutdown()
     }
 
 }

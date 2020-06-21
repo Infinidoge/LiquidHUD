@@ -6,13 +6,9 @@
 package net.ccbluex.liquidbounce.utils;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
-import net.ccbluex.liquidbounce.features.module.modules.combat.NoFriends;
-import net.ccbluex.liquidbounce.features.module.modules.misc.AntiBot;
-import net.ccbluex.liquidbounce.features.module.modules.misc.Teams;
 import net.ccbluex.liquidbounce.utils.render.ColorUtils;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
 import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityGolem;
@@ -36,35 +32,7 @@ public final class EntityUtils extends MinecraftInstance {
     public static boolean targetAnimals = false;
     public static boolean targetDead = false;
 
-    public static boolean isSelected(final Entity entity, final boolean canAttackCheck) {
-        if(entity instanceof EntityLivingBase && (targetDead || entity.isEntityAlive()) && entity != mc.thePlayer) {
-            if(targetInvisible || !entity.isInvisible()) {
-                if(targetPlayer && entity instanceof EntityPlayer) {
-                    final EntityPlayer entityPlayer = (EntityPlayer) entity;
 
-                    if(canAttackCheck) {
-                        if(AntiBot.isBot(entityPlayer))
-                            return false;
-
-                        if (isFriend(entityPlayer) && !LiquidBounce.moduleManager.getModule(NoFriends.class).getState())
-                            return false;
-
-                        if(entityPlayer.isSpectator())
-                            return false;
-
-                        final Teams teams = (Teams) LiquidBounce.moduleManager.getModule(Teams.class);
-                        return !teams.getState() || !teams.isInYourTeam(entityPlayer);
-                    }
-
-                    return true;
-                }
-
-                return targetMobs && isMob(entity) || targetAnimals && isAnimal(entity);
-
-            }
-        }
-        return false;
-    }
 
     public static boolean isFriend(final Entity entity) {
         return entity instanceof EntityPlayer && entity.getName() != null &&
