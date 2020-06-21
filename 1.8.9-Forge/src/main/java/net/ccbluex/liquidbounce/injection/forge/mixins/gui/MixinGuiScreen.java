@@ -6,7 +6,6 @@
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
 import net.ccbluex.liquidbounce.LiquidBounce;
-import net.ccbluex.liquidbounce.features.module.modules.misc.ComponentOnHover;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.event.ClickEvent;
@@ -62,19 +61,6 @@ public abstract class MixinGuiScreen {
             LiquidBounce.commandManager.executeCommands(msg);
             callbackInfo.cancel();
         }
-    }
-
-    @Inject(method = "handleComponentHover", at = @At("HEAD"))
-    private void handleHoverOverComponent(IChatComponent component, int x, int y, final CallbackInfo callbackInfo) {
-        if (component == null || component.getChatStyle().getChatClickEvent() == null || !LiquidBounce.moduleManager.getModule(ComponentOnHover.class).getState())
-            return;
-
-        final ChatStyle chatStyle = component.getChatStyle();
-
-        final ClickEvent clickEvent = chatStyle.getChatClickEvent();
-        final HoverEvent hoverEvent = chatStyle.getChatHoverEvent();
-
-        drawHoveringText(Collections.singletonList("§c§l" + clickEvent.getAction().getCanonicalName().toUpperCase() + ": §a" + clickEvent.getValue()), x, y - (hoverEvent != null ? 17 : 0));
     }
 
     /**

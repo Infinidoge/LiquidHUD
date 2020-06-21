@@ -52,19 +52,6 @@ public class ValuesConfig extends FileConfig {
 
             if (entry.getKey().equalsIgnoreCase("CommandPrefix")) {
                 LiquidBounce.commandManager.setPrefix(entry.getValue().getAsCharacter());
-            } else if (entry.getKey().equalsIgnoreCase("targets")) {
-                JsonObject jsonValue = (JsonObject) entry.getValue();
-
-                if (jsonValue.has("TargetPlayer"))
-                    EntityUtils.targetPlayer = jsonValue.get("TargetPlayer").getAsBoolean();
-                if (jsonValue.has("TargetMobs"))
-                    EntityUtils.targetMobs = jsonValue.get("TargetMobs").getAsBoolean();
-                if (jsonValue.has("TargetAnimals"))
-                    EntityUtils.targetAnimals = jsonValue.get("TargetAnimals").getAsBoolean();
-                if (jsonValue.has("TargetInvisible"))
-                    EntityUtils.targetInvisible = jsonValue.get("TargetInvisible").getAsBoolean();
-                if (jsonValue.has("TargetDead"))
-                    EntityUtils.targetDead = jsonValue.get("TargetDead").getAsBoolean();
             } else if (entry.getKey().equalsIgnoreCase("features")) {
                 JsonObject jsonValue = (JsonObject) entry.getValue();
 
@@ -96,14 +83,6 @@ public class ValuesConfig extends FileConfig {
         final JsonObject jsonObject = new JsonObject();
 
         jsonObject.addProperty("CommandPrefix", LiquidBounce.commandManager.getPrefix());
-
-        final JsonObject jsonTargets = new JsonObject();
-        jsonTargets.addProperty("TargetPlayer", EntityUtils.targetPlayer);
-        jsonTargets.addProperty("TargetMobs", EntityUtils.targetMobs);
-        jsonTargets.addProperty("TargetAnimals", EntityUtils.targetAnimals);
-        jsonTargets.addProperty("TargetInvisible", EntityUtils.targetInvisible);
-        jsonTargets.addProperty("TargetDead", EntityUtils.targetDead);
-        jsonObject.add("targets", jsonTargets);
 
         final JsonObject jsonFeatures = new JsonObject();
         jsonFeatures.addProperty("AutoReconnectDelay", AutoReconnect.INSTANCE.getDelay());

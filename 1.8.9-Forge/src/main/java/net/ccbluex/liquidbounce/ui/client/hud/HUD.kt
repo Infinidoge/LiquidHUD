@@ -21,18 +21,14 @@ import kotlin.math.min
 open class HUD : MinecraftInstance() {
 
     val elements = mutableListOf<Element>()
-    val notifications = mutableListOf<Notification>()
 
     companion object {
 
         val elements = arrayOf(
                 Armor::class.java,
-                Arraylist::class.java,
                 Effects::class.java,
                 Image::class.java,
                 Model::class.java,
-                Notifications::class.java,
-                TabGUI::class.java,
                 Text::class.java,
                 ScoreboardElement::class.java
         )
@@ -42,13 +38,8 @@ open class HUD : MinecraftInstance() {
          */
         @JvmStatic
         fun createDefault() = HUD()
-                .addElement(Text.defaultClient())
-                .addElement(TabGUI())
-                .addElement(Arraylist())
                 .addElement(ScoreboardElement())
-                .addElement(Armor())
                 .addElement(Effects())
-                .addElement(Notifications())
 
     }
 
@@ -196,15 +187,5 @@ open class HUD : MinecraftInstance() {
 
         elements.clear()
     }
-
-    /**
-     * Add [notification]
-     */
-    fun addNotification(notification: Notification) = elements.any { it is Notifications } && notifications.add(notification)
-
-    /**
-     * Remove [notification]
-     */
-    fun removeNotification(notification: Notification) = notifications.remove(notification)
 
 }

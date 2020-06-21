@@ -7,7 +7,6 @@ package net.ccbluex.liquidbounce.features.module
 
 enum class ModuleCategory(val displayName: String) {
 
-    RENDER("Render"),
-    MISC("Misc")
+    RENDER("Render")
 
 }

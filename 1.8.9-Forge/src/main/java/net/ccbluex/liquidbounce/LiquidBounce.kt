@@ -20,8 +20,6 @@ import net.ccbluex.liquidbounce.ui.client.hud.HUD.Companion.createDefault
 import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.ClassUtils.hasForge
 import net.ccbluex.liquidbounce.utils.ClientUtils
-import net.ccbluex.liquidbounce.utils.InventoryUtils
-import net.ccbluex.liquidbounce.utils.RotationUtils
 import net.ccbluex.liquidbounce.utils.misc.HttpUtils
 import net.minecraft.util.ResourceLocation
 
@@ -69,8 +67,6 @@ object LiquidBounce {
         eventManager = EventManager()
 
         // Register listeners
-        eventManager.registerListener(RotationUtils())
-        eventManager.registerListener(InventoryUtils())
 
         // Create command manager
         commandManager = CommandManager()

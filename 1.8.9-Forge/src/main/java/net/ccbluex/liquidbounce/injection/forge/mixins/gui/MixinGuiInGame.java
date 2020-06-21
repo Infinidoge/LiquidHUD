@@ -8,7 +8,6 @@ package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 import net.ccbluex.liquidbounce.LiquidBounce;
 import net.ccbluex.liquidbounce.event.Render2DEvent;
 import net.ccbluex.liquidbounce.features.module.modules.render.HUD;
-import net.ccbluex.liquidbounce.features.module.modules.render.NoScoreboard;
 import net.ccbluex.liquidbounce.ui.font.AWTFontRenderer;
 import net.ccbluex.liquidbounce.utils.ClassUtils;
 import net.minecraft.client.Minecraft;
@@ -34,7 +33,7 @@ public abstract class MixinGuiInGame {
 
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(CallbackInfo callbackInfo) {
-        if (LiquidBounce.moduleManager.getModule(HUD.class).getState() || NoScoreboard.INSTANCE.getState())
+        if (LiquidBounce.moduleManager.getModule(HUD.class).getState())
             callbackInfo.cancel();
     }
 
@@ -79,5 +78,4 @@ public abstract class MixinGuiInGame {
             AWTFontRenderer.Companion.garbageCollectionTick();
         }
     }
-
 }

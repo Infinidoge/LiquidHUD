@@ -1,9 +1,9 @@
-version = "b73"
+version = "0.2.0"
 group = "net.ccbluex"
 
 subprojects {
 
-    version = "b73"
+    version = "0.2.0"
     group = "net.ccbluex"
 
 }

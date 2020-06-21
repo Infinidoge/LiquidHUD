@@ -9,7 +9,6 @@ import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.KeyEvent
 import net.ccbluex.liquidbounce.event.Listenable
-import net.ccbluex.liquidbounce.features.module.modules.misc.*
 import net.ccbluex.liquidbounce.features.module.modules.render.*
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import java.util.*
@@ -32,11 +31,9 @@ class ModuleManager : Listenable {
 
         registerModules(
                 ClickGUI::class.java,
-                HUD::class.java,
-                ComponentOnHover::class.java
+                HUD::class.java
         )
 
-        registerModule(NoScoreboard)
         ClientUtils.getLogger().info("[ModuleManager] Loaded ${modules.size} modules.")
     }
 

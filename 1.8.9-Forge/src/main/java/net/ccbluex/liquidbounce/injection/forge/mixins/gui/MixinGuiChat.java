@@ -71,12 +71,6 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         inputField.yPosition = (int) yPosOfInputField;
     }
 
-    @Inject(method = "autocompletePlayerNames", at = @At("HEAD"))
-    private void prioritizeClientFriends(final CallbackInfo callbackInfo) {
-        foundPlayerNames.sort(
-                Comparator.comparing(s -> !LiquidBounce.fileManager.friendsConfig.isFriend(s)));
-    }
-
     /**
      * Adds client command auto completion and cancels sending an auto completion request packet
      * to the server if the message contains a client command.

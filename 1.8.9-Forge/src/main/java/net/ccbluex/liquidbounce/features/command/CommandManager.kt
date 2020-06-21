@@ -27,22 +27,16 @@ class CommandManager {
         registerCommand(BindCommand())
         registerCommand(HelpCommand())
         registerCommand(SayCommand())
-        registerCommand(FriendCommand())
         registerCommand(AutoSettingsCommand())
         registerCommand(LocalAutoSettingsCommand())
         registerCommand(ServerInfoCommand())
         registerCommand(ToggleCommand())
-        registerCommand(GiveCommand())
         registerCommand(TacoCommand())
         registerCommand(BindsCommand())
-        registerCommand(HoloStandCommand())
         registerCommand(PingCommand())
-        registerCommand(RenameCommand())
-        registerCommand(EnchantCommand())
         registerCommand(ReloadCommand())
         registerCommand(PrefixCommand())
         registerCommand(ShortcutCommand())
-        registerCommand(HideCommand())
     }
 
     /**
