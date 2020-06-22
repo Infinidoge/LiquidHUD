@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.command.commands
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.features.command.Command
 
 class PrefixCommand : Command("prefix", emptyArray()) {
@@ -25,8 +25,8 @@ class PrefixCommand : Command("prefix", emptyArray()) {
             return
         }
 
-        LiquidBounce.commandManager.prefix = prefix.single()
-        LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.valuesConfig)
+        LiquidHUD.commandManager.prefix = prefix.single()
+        LiquidHUD.fileManager.saveConfig(LiquidHUD.fileManager.valuesConfig)
 
         chat("Successfully changed command prefix to '§8$prefix§3'")
     }

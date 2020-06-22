@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -9,7 +9,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.features.module.Module;
 import net.ccbluex.liquidbounce.file.FileConfig;
 import net.ccbluex.liquidbounce.file.FileManager;
@@ -44,7 +44,7 @@ public class ModulesConfig extends FileConfig {
         final Iterator<Map.Entry<String, JsonElement>> entryIterator = jsonElement.getAsJsonObject().entrySet().iterator();
         while(entryIterator.hasNext()) {
             final Map.Entry<String, JsonElement> entry = entryIterator.next();
-            final Module module = LiquidBounce.moduleManager.getModule(entry.getKey());
+            final Module module = LiquidHUD.moduleManager.getModule(entry.getKey());
 
             if(module != null) {
                 final JsonObject jsonModule = (JsonObject) entry.getValue();
@@ -67,7 +67,7 @@ public class ModulesConfig extends FileConfig {
     protected void saveConfig() throws IOException {
         final JsonObject jsonObject = new JsonObject();
 
-        for (final Module module : LiquidBounce.moduleManager.getModules()) {
+        for (final Module module : LiquidHUD.moduleManager.getModules()) {
             final JsonObject jsonMod = new JsonObject();
             jsonMod.addProperty("State", module.getState());
             jsonMod.addProperty("KeyBind", module.getKeyBind());

@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.ui.client.clickgui.elements;
 
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.features.module.Module;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +34,7 @@ public class ModuleElement extends ButtonElement {
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float button) {
-        LiquidBounce.clickGui.style.drawModuleElement(mouseX, mouseY, this);
+        LiquidHUD.clickGui.style.drawModuleElement(mouseX, mouseY, this);
     }
 
     @Override

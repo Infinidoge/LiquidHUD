@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.module.modules.render;
 
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.event.EventTarget;
 import net.ccbluex.liquidbounce.event.PacketEvent;
 import net.ccbluex.liquidbounce.features.module.Module;
@@ -28,7 +28,7 @@ import java.awt.*;
 
 @ModuleInfo(name = "ClickGUI", description = "Opens the ClickGUI.", category = ModuleCategory.RENDER, keyBind = Keyboard.KEY_RSHIFT, canEnable = false)
 public class ClickGUI extends Module {
-    private final ListValue styleValue = new ListValue("Style", new String[] {"LiquidBounce", "Null", "Slowly"}, "Slowly") {
+    private final ListValue styleValue = new ListValue("Style", new String[] {"LiquidHUD", "Null", "Slowly"}, "Slowly") {
         @Override
         protected void onChanged(final String oldValue, final String newValue) {
             updateStyle();
@@ -51,19 +51,19 @@ public class ClickGUI extends Module {
     public void onEnable() {
         updateStyle();
 
-        mc.displayGuiScreen(LiquidBounce.clickGui);
+        mc.displayGuiScreen(LiquidHUD.clickGui);
     }
 
     private void updateStyle() {
         switch(styleValue.get().toLowerCase()) {
             case "liquidbounce":
-                LiquidBounce.clickGui.style = new LiquidBounceStyle();
+                LiquidHUD.clickGui.style = new LiquidBounceStyle();
                 break;
             case "null":
-                LiquidBounce.clickGui.style = new NullStyle();
+                LiquidHUD.clickGui.style = new NullStyle();
                 break;
             case "slowly":
-                LiquidBounce.clickGui.style = new SlowlyStyle();
+                LiquidHUD.clickGui.style = new SlowlyStyle();
                 break;
         }
     }

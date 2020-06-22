@@ -6,6 +6,7 @@
   "mixins": [
     "client.MixinMinecraft",
     "client.MixinResourcePackRepository",
+    "entity.MixinEntityPlayerSP",
     "gui.MixinGuiButtonExt",
     "gui.MixinGuiChat",
     "gui.MixinGuiInGame",

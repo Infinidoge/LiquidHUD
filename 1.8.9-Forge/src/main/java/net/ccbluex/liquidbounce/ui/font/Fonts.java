@@ -1,12 +1,12 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.ui.font;
 
 import com.google.gson.*;
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.misc.HttpUtils;
 import net.minecraft.client.Minecraft;
@@ -53,7 +53,7 @@ public class Fonts {
         try {
             CUSTOM_FONT_RENDERERS.clear();
 
-            final File fontsFile = new File(LiquidBounce.fileManager.fontsDir, "fonts.json");
+            final File fontsFile = new File(LiquidHUD.fileManager.fontsDir, "fonts.json");
 
             if(fontsFile.exists()) {
                 final JsonElement jsonElement = new JsonParser().parse(new BufferedReader(new FileReader(fontsFile)));
@@ -87,13 +87,13 @@ public class Fonts {
 
     private static void downloadFonts() {
         try {
-            final File outputFile = new File(LiquidBounce.fileManager.fontsDir, "roboto.zip");
+            final File outputFile = new File(LiquidHUD.fileManager.fontsDir, "roboto.zip");
 
             if(!outputFile.exists()) {
                 ClientUtils.getLogger().info("Downloading fonts...");
-                HttpUtils.download(LiquidBounce.CLIENT_CLOUD + "/fonts/Roboto.zip", outputFile);
+                HttpUtils.download(LiquidHUD.CLIENT_CLOUD + "/fonts/Roboto.zip", outputFile);
                 ClientUtils.getLogger().info("Extract fonts...");
-                extractZip(outputFile.getPath(), LiquidBounce.fileManager.fontsDir.getPath());
+                extractZip(outputFile.getPath(), LiquidHUD.fileManager.fontsDir.getPath());
             }
         }catch(IOException e) {
             e.printStackTrace();
@@ -176,7 +176,7 @@ public class Fonts {
 
     private static Font getFont(final String fontName, final int size) {
         try {
-            final InputStream inputStream = new FileInputStream(new File(LiquidBounce.fileManager.fontsDir, fontName));
+            final InputStream inputStream = new FileInputStream(new File(LiquidHUD.fileManager.fontsDir, fontName));
             Font awtClientFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);
             awtClientFont = awtClientFont.deriveFont(Font.PLAIN, size);
             inputStream.close();

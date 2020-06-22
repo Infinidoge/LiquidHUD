@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.module
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.event.EventTarget
 import net.ccbluex.liquidbounce.event.KeyEvent
 import net.ccbluex.liquidbounce.event.Listenable
@@ -20,7 +20,7 @@ class ModuleManager : Listenable {
     private val moduleClassMap = hashMapOf<Class<*>, Module>()
 
     init {
-        LiquidBounce.eventManager.registerListener(this)
+        LiquidHUD.eventManager.registerListener(this)
     }
 
     /**
@@ -45,7 +45,7 @@ class ModuleManager : Listenable {
         moduleClassMap[module.javaClass] = module
 
         generateCommand(module)
-        LiquidBounce.eventManager.registerListener(module)
+        LiquidHUD.eventManager.registerListener(module)
     }
 
     /**
@@ -73,7 +73,7 @@ class ModuleManager : Listenable {
     fun unregisterModule(module: Module) {
         modules.remove(module)
         moduleClassMap.remove(module::class.java)
-        LiquidBounce.eventManager.unregisterListener(module)
+        LiquidHUD.eventManager.unregisterListener(module)
     }
 
     /**
@@ -85,7 +85,7 @@ class ModuleManager : Listenable {
         if (values.isEmpty())
             return
 
-        LiquidBounce.commandManager.registerCommand(ModuleCommand(module, values))
+        LiquidHUD.commandManager.registerCommand(ModuleCommand(module, values))
     }
 
     /**

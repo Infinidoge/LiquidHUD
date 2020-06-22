@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.ui.font
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.event.TextEvent
 import net.ccbluex.liquidbounce.utils.ClassUtils
 import net.ccbluex.liquidbounce.utils.render.ColorUtils
@@ -52,7 +52,7 @@ class GameFontRenderer(font: Font) : FontRenderer(Minecraft.getMinecraft().gameS
         var currentText = text
 
         val event = TextEvent(currentText)
-        LiquidBounce.eventManager.callEvent(event)
+        LiquidHUD.eventManager.callEvent(event)
         currentText = event.text ?: return 0
 
         val currY = y - 3F
@@ -199,7 +199,7 @@ class GameFontRenderer(font: Font) : FontRenderer(Minecraft.getMinecraft().gameS
         var currentText = text
 
         val event = TextEvent(currentText)
-        LiquidBounce.eventManager.callEvent(event)
+        LiquidHUD.eventManager.callEvent(event)
         currentText = event.text ?: return 0
 
         return if (currentText.contains("§")) {

@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -7,7 +7,7 @@ package net.ccbluex.liquidbounce.file;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.file.configs.*;
 import net.ccbluex.liquidbounce.utils.ClientUtils;
 import net.ccbluex.liquidbounce.utils.MinecraftInstance;
@@ -25,17 +25,14 @@ import java.lang.reflect.Field;
 @SideOnly(Side.CLIENT)
 public class FileManager extends MinecraftInstance {
 
-    public final File dir = new File(mc.mcDataDir, LiquidBounce.CLIENT_NAME + "-1.8");
+    public final File dir = new File(mc.mcDataDir, LiquidHUD.CLIENT_NAME + "-1.8");
     public final File fontsDir = new File(dir, "fonts");
     public final File settingsDir = new File(dir, "settings");
 
     public final FileConfig modulesConfig = new ModulesConfig(new File(dir, "modules.json"));
     public final FileConfig valuesConfig = new ValuesConfig(new File(dir, "values.json"));
     public final FileConfig clickGuiConfig = new ClickGuiConfig(new File(dir, "clickgui.json"));
-    public final AccountsConfig accountsConfig = new AccountsConfig(new File(dir, "accounts.json"));
-    public final FriendsConfig friendsConfig = new FriendsConfig(new File(dir, "friends.json"));
     public final FileConfig hudConfig = new HudConfig(new File(dir, "hud.json"));
-    public final FileConfig shortcutsConfig = new ShortcutsConfig(new File(dir, "shortcuts.json"));
 
     public final File backgroundFile = new File(dir, "userbackground.png");
 
@@ -49,7 +46,6 @@ public class FileManager extends MinecraftInstance {
      */
     public FileManager() {
         setupFolder();
-        loadBackground();
     }
 
     /**
@@ -165,7 +161,7 @@ public class FileManager extends MinecraftInstance {
      * @param ignoreStarting check starting
      */
     private void saveConfig(final FileConfig config, final boolean ignoreStarting) {
-        if (!ignoreStarting && LiquidBounce.INSTANCE.isStarting())
+        if (!ignoreStarting && LiquidHUD.INSTANCE.isStarting())
             return;
 
         try {
@@ -177,26 +173,6 @@ public class FileManager extends MinecraftInstance {
         }catch(final Throwable t) {
             ClientUtils.getLogger().error("[FileManager] Failed to save config file: " +
                     config.getFile().getName() + ".", t);
-        }
-    }
-
-    /**
-     * Load background for background
-     */
-    public void loadBackground() {
-        if(backgroundFile.exists()) {
-            try {
-                final BufferedImage bufferedImage = ImageIO.read(new FileInputStream(backgroundFile));
-
-                if(bufferedImage == null)
-                    return;
-
-                LiquidBounce.INSTANCE.setBackground(new ResourceLocation(LiquidBounce.CLIENT_NAME.toLowerCase() + "/background.png"));
-                mc.getTextureManager().loadTexture(LiquidBounce.INSTANCE.getBackground(), new DynamicTexture(bufferedImage));
-                ClientUtils.getLogger().info("[FileManager] Loaded background.");
-            }catch(final Exception e) {
-                ClientUtils.getLogger().error("[FileManager] Failed to load background.", e);
-            }
         }
     }
 }

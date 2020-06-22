@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.module
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.event.Listenable
 import net.ccbluex.liquidbounce.utils.MinecraftInstance
 import net.ccbluex.liquidbounce.utils.render.ColorUtils.stripColor
@@ -28,15 +28,15 @@ open class Module : MinecraftInstance(), Listenable {
         set(keyBind) {
             field = keyBind
 
-            if (!LiquidBounce.isStarting)
-                LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.modulesConfig)
+            if (!LiquidHUD.isStarting)
+                LiquidHUD.fileManager.saveConfig(LiquidHUD.fileManager.modulesConfig)
         }
     var array = true
         set(array) {
             field = array
 
-            if (!LiquidBounce.isStarting)
-                LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.modulesConfig)
+            if (!LiquidHUD.isStarting)
+                LiquidHUD.fileManager.saveConfig(LiquidHUD.fileManager.modulesConfig)
         }
     private val canEnable: Boolean
 
@@ -62,7 +62,7 @@ open class Module : MinecraftInstance(), Listenable {
             onToggle(value)
 
             // Play sound and add notification
-            if (!LiquidBounce.isStarting) {
+            if (!LiquidHUD.isStarting) {
                 mc.soundHandler.playSound(PositionedSoundRecord.create(ResourceLocation("random.click"),
                         1F))
             }
@@ -79,7 +79,7 @@ open class Module : MinecraftInstance(), Listenable {
             }
 
             // Save module state
-            LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.modulesConfig)
+            LiquidHUD.fileManager.saveConfig(LiquidHUD.fileManager.modulesConfig)
         }
 
 

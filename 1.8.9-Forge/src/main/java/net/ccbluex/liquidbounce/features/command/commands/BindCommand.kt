@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.command.commands
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.features.command.Command
 import org.lwjgl.input.Keyboard
 
@@ -16,7 +16,7 @@ class BindCommand : Command("bind", emptyArray()) {
     override fun execute(args: Array<String>) {
         if (args.size > 2) {
             // Get module by name
-            val module = LiquidBounce.moduleManager.getModule(args[1])
+            val module = LiquidHUD.moduleManager.getModule(args[1])
 
             if (module == null) {
                 chat("Module §a§l" + args[1] + "§3 not found.")
@@ -41,7 +41,7 @@ class BindCommand : Command("bind", emptyArray()) {
         val moduleName = args[0]
 
         return when (args.size) {
-            1 -> LiquidBounce.moduleManager.modules
+            1 -> LiquidHUD.moduleManager.modules
                     .map { it.name }
                     .filter { it.startsWith(moduleName, true) }
                     .toList()

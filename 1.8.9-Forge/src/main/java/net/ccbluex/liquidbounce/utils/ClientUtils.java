@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -23,7 +23,7 @@ import java.security.PublicKey;
 @SideOnly(Side.CLIENT)
 public final class ClientUtils extends MinecraftInstance {
 
-    private static final Logger logger = LogManager.getLogger("LiquidBounce");
+    private static final Logger logger = LogManager.getLogger("LiquidHUD");
 
     private static Field fastRenderField;
 

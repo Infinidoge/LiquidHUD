@@ -1,11 +1,10 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.ui.client.hud.element.elements
 
-import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.ui.client.hud.designer.GuiHudDesigner
 import net.ccbluex.liquidbounce.ui.client.hud.element.Border
 import net.ccbluex.liquidbounce.ui.client.hud.element.Element
@@ -41,20 +40,6 @@ class Text(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
         val HOUR_FORMAT = SimpleDateFormat("HH:mm")
 
         val DECIMAL_FORMAT = DecimalFormat("0.00")
-
-        /**
-         * Create default element
-         */
-        fun defaultClient(): Text {
-            val text = Text(x = 2.0, y = 2.0, scale = 2F)
-
-            text.displayString.set("%clientName%")
-            text.shadow.set(true)
-            text.fontValue.set(Fonts.font40)
-            text.setColor(Color(0, 111, 255))
-
-            return text
-        }
 
     }
 
@@ -98,12 +83,8 @@ class Text(x: Double = 10.0, y: Double = 10.0, scale: Float = 1F,
                 "ping" -> return EntityUtils.getPing(mc.thePlayer).toString()
             }
         }
-
         return when (str) {
             "username" -> mc.getSession().username
-            "clientName" -> LiquidBounce.CLIENT_NAME
-            "clientVersion" -> "b${LiquidBounce.CLIENT_VERSION}"
-            "clientCreator" -> LiquidBounce.CLIENT_CREATOR
             "fps" -> Minecraft.getDebugFPS().toString()
             "date" -> DATE_FORMAT.format(System.currentTimeMillis())
             "time" -> HOUR_FORMAT.format(System.currentTimeMillis())

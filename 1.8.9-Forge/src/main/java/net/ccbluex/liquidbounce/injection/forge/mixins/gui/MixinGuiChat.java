@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.utils.render.RenderUtils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiChat;
@@ -22,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
-import java.util.Comparator;
 import java.util.List;
 
 @Mixin(GuiChat.class)
@@ -49,10 +48,10 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
 
     @Inject(method = "keyTyped", at = @At("RETURN"))
     private void updateLength(CallbackInfo callbackInfo) {
-        if (!inputField.getText().startsWith(String.valueOf(LiquidBounce.commandManager.getPrefix()))) return;
-        LiquidBounce.commandManager.autoComplete(inputField.getText());
+        if (!inputField.getText().startsWith(String.valueOf(LiquidHUD.commandManager.getPrefix()))) return;
+        LiquidHUD.commandManager.autoComplete(inputField.getText());
 
-        if (!inputField.getText().startsWith(LiquidBounce.commandManager.getPrefix() + "lc"))
+        if (!inputField.getText().startsWith(LiquidHUD.commandManager.getPrefix() + "lc"))
             inputField.setMaxStringLength(10000);
         else
             inputField.setMaxStringLength(100);
@@ -79,10 +78,10 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
      */
     @Inject(method = "sendAutocompleteRequest", at = @At("HEAD"), cancellable = true)
     private void handleClientCommandCompletion(String full, final String ignored, CallbackInfo callbackInfo) {
-        if (LiquidBounce.commandManager.autoComplete(full)) {
+        if (LiquidHUD.commandManager.autoComplete(full)) {
             waitingOnAutocomplete = true;
 
-            String[] latestAutoComplete = LiquidBounce.commandManager.getLatestAutoComplete();
+            String[] latestAutoComplete = LiquidHUD.commandManager.getLatestAutoComplete();
 
             if (full.toLowerCase().endsWith(latestAutoComplete[latestAutoComplete.length - 1].toLowerCase()))
                 return;
@@ -101,7 +100,7 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
      */
     @Inject(method = "onAutocompleteResponse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiChat;autocompletePlayerNames(F)V", shift = At.Shift.BEFORE), cancellable = true)
     private void onAutocompleteResponse(String[] autoCompleteResponse, CallbackInfo callbackInfo) {
-        if (LiquidBounce.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
+        if (LiquidHUD.commandManager.getLatestAutoComplete().length != 0) callbackInfo.cancel();
     }
 
     /**
@@ -112,8 +111,8 @@ public abstract class MixinGuiChat extends MixinGuiScreen {
         Gui.drawRect(2, this.height - (int) fade, this.width - 2, this.height, Integer.MIN_VALUE);
         this.inputField.drawTextBox();
 
-        if (LiquidBounce.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(LiquidBounce.commandManager.getPrefix()))) {
-            String[] latestAutoComplete = LiquidBounce.commandManager.getLatestAutoComplete();
+        if (LiquidHUD.commandManager.getLatestAutoComplete().length > 0 && !inputField.getText().isEmpty() && inputField.getText().startsWith(String.valueOf(LiquidHUD.commandManager.getPrefix()))) {
+            String[] latestAutoComplete = LiquidHUD.commandManager.getLatestAutoComplete();
             String[] textArray = inputField.getText().split(" ");
             String trimmedString = latestAutoComplete[0].replaceFirst("(?i)" + textArray[textArray.length - 1], "");
 

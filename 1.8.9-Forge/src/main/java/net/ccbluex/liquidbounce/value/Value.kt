@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -8,7 +8,7 @@ package net.ccbluex.liquidbounce.value
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.ui.font.Fonts
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.minecraft.client.gui.FontRenderer
@@ -28,7 +28,7 @@ abstract class Value<T>(val name: String, protected var value: T) {
             onChange(oldValue, newValue)
             changeValue(newValue)
             onChanged(oldValue, newValue)
-            LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.valuesConfig)
+            LiquidHUD.fileManager.saveConfig(LiquidHUD.fileManager.valuesConfig)
         } catch (e: Exception) {
             ClientUtils.getLogger().error("[ValueSystem ($name)]: ${e.javaClass.name} (${e.message}) [$oldValue >> $newValue]")
         }

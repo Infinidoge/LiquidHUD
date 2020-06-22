@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -12,8 +12,6 @@ import net.ccbluex.liquidbounce.event.EventManager
 import net.ccbluex.liquidbounce.features.command.CommandManager
 import net.ccbluex.liquidbounce.features.module.ModuleManager
 import net.ccbluex.liquidbounce.file.FileManager
-import net.ccbluex.liquidbounce.tabs.BlocksTab
-import net.ccbluex.liquidbounce.tabs.HeadsTab
 import net.ccbluex.liquidbounce.ui.client.clickgui.ClickGui
 import net.ccbluex.liquidbounce.ui.client.hud.HUD
 import net.ccbluex.liquidbounce.ui.client.hud.HUD.Companion.createDefault
@@ -23,13 +21,11 @@ import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.ccbluex.liquidbounce.utils.misc.HttpUtils
 import net.minecraft.util.ResourceLocation
 
-object LiquidBounce {
+object LiquidHUD {
 
     // Client information
-    const val CLIENT_NAME = "LiquidBounce"
-    const val CLIENT_VERSION = 73
-    const val IN_DEV = true
-    const val CLIENT_CREATOR = "CCBlueX"
+    const val CLIENT_NAME = "LiquidHUD"
+    const val CLIENT_VERSION = "0.2.0"
     const val MINECRAFT_VERSION = "1.8.9"
     const val CLIENT_CLOUD = "https://cloud.liquidbounce.net/LiquidBounce"
 
@@ -46,19 +42,13 @@ object LiquidBounce {
 
     lateinit var clickGui: ClickGui
 
-    // Update information
-    var latestVersion = 0
-
-    // Menu Background
-    var background: ResourceLocation? = null
-
     /**
      * Execute if client will be started
      */
     fun startClient() {
         isStarting = true
 
-        ClientUtils.getLogger().info("Starting $CLIENT_NAME b$CLIENT_VERSION, by $CLIENT_CREATOR")
+        ClientUtils.getLogger().info("Starting $CLIENT_NAME $MINECRAFT_VERSION-$CLIENT_VERSION")
 
         // Create file manager
         fileManager = FileManager()
@@ -83,18 +73,11 @@ object LiquidBounce {
         commandManager.registerCommands()
 
         // Load configs
-        fileManager.loadConfigs(fileManager.modulesConfig, fileManager.valuesConfig, fileManager.accountsConfig,
-                fileManager.friendsConfig, fileManager.shortcutsConfig)
+        fileManager.loadConfigs(fileManager.modulesConfig, fileManager.valuesConfig)
 
         // ClickGUI
         clickGui = ClickGui()
         fileManager.loadConfig(fileManager.clickGuiConfig)
-
-        // Tabs (Only for Forge!)
-        if (hasForge()) {
-            BlocksTab()
-            HeadsTab()
-        }
 
         // Set HUD
         hud = createDefault()
@@ -102,20 +85,6 @@ object LiquidBounce {
 
         // Disable optifine fastrender
         ClientUtils.disableFastRender()
-
-        try {
-            // Read versions json from cloud
-            val jsonObj = JsonParser()
-                    .parse(HttpUtils.get("$CLIENT_CLOUD/versions.json"))
-
-            // Check json is valid object and has current minecraft version
-            if (jsonObj is JsonObject && jsonObj.has(MINECRAFT_VERSION)) {
-                // Get official latest client version
-                latestVersion = jsonObj[MINECRAFT_VERSION].asInt
-            }
-        } catch (exception: Throwable) { // Print throwable to console
-            ClientUtils.getLogger().error("Failed to check for updates.", exception)
-        }
 
         // Set is starting status
         isStarting = false

@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.module.modules.render;
 
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.event.*;
 import net.ccbluex.liquidbounce.features.module.Module;
 import net.ccbluex.liquidbounce.features.module.ModuleCategory;
@@ -33,17 +33,17 @@ public class HUD extends Module {
         if (mc.currentScreen instanceof GuiHudDesigner)
             return;
 
-        LiquidBounce.hud.render(false);
+        LiquidHUD.hud.render(false);
     }
 
     @EventTarget
     public void onUpdate(final UpdateEvent event) {
-        LiquidBounce.hud.update();
+        LiquidHUD.hud.update();
     }
 
     @EventTarget
     public void onKey(final KeyEvent event) {
-        LiquidBounce.hud.handleKey('a', event.getKey());
+        LiquidHUD.hud.handleKey('a', event.getKey());
     }
 
     @EventTarget(ignoreCondition = true)
@@ -53,7 +53,7 @@ public class HUD extends Module {
 
         if (getState() && blurValue.get() && !mc.entityRenderer.isShaderActive() && event.getGuiScreen() != null &&
                 !(event.getGuiScreen() instanceof GuiChat || event.getGuiScreen() instanceof GuiHudDesigner))
-            mc.entityRenderer.loadShader(new ResourceLocation(LiquidBounce.CLIENT_NAME.toLowerCase() + "/blur.json"));
+            mc.entityRenderer.loadShader(new ResourceLocation(LiquidHUD.CLIENT_NAME.toLowerCase() + "/blur.json"));
         else if (mc.entityRenderer.getShaderGroup() != null &&
                 mc.entityRenderer.getShaderGroup().getShaderGroupName().contains("liquidbounce/blur.json"))
             mc.entityRenderer.stopUseShader();

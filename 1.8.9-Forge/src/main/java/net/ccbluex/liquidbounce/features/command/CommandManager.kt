@@ -1,14 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.command
 
-import net.ccbluex.liquidbounce.LiquidBounce
 import net.ccbluex.liquidbounce.features.command.commands.*
-import net.ccbluex.liquidbounce.features.command.shortcuts.Shortcut
-import net.ccbluex.liquidbounce.features.command.shortcuts.ShortcutParser
 import net.ccbluex.liquidbounce.utils.ClientUtils
 import net.minecraftforge.fml.relauncher.Side
 import net.minecraftforge.fml.relauncher.SideOnly
@@ -26,17 +23,10 @@ class CommandManager {
     fun registerCommands() {
         registerCommand(BindCommand())
         registerCommand(HelpCommand())
-        registerCommand(SayCommand())
-        registerCommand(AutoSettingsCommand())
-        registerCommand(LocalAutoSettingsCommand())
-        registerCommand(ServerInfoCommand())
         registerCommand(ToggleCommand())
-        registerCommand(TacoCommand())
         registerCommand(BindsCommand())
-        registerCommand(PingCommand())
         registerCommand(ReloadCommand())
         registerCommand(PrefixCommand())
-        registerCommand(ShortcutCommand())
     }
 
     /**
@@ -125,30 +115,6 @@ class CommandManager {
      * Register [command] by just adding it to the commands registry
      */
     fun registerCommand(command: Command) = commands.add(command)
-
-    fun registerShortcut(name: String, script: String) {
-        if (getCommand(name) == null) {
-            registerCommand(Shortcut(name, ShortcutParser.parse(script).map {
-                val command = getCommand(it[0]) ?: throw IllegalArgumentException("Command ${it[0]} not found!")
-
-                Pair(command, it.toTypedArray())
-            }))
-
-            LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.shortcutsConfig)
-        } else {
-            throw IllegalArgumentException("Command already exists!")
-        }
-    }
-
-    fun unregisterShortcut(name: String): Boolean {
-        val removed = commands.removeIf {
-            it is Shortcut && it.command.equals(name, ignoreCase = true)
-        }
-
-        LiquidBounce.fileManager.saveConfig(LiquidBounce.fileManager.shortcutsConfig)
-
-        return removed
-    }
 
     /**
      * Unregister [command] by just removing it from the commands registry

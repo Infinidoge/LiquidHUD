@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.injection.forge.mixins.gui;
 
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.event.Render2DEvent;
 import net.ccbluex.liquidbounce.features.module.modules.render.HUD;
 import net.ccbluex.liquidbounce.ui.font.AWTFontRenderer;
@@ -33,13 +33,13 @@ public abstract class MixinGuiInGame {
 
     @Inject(method = "renderScoreboard", at = @At("HEAD"), cancellable = true)
     private void renderScoreboard(CallbackInfo callbackInfo) {
-        if (LiquidBounce.moduleManager.getModule(HUD.class).getState())
+        if (LiquidHUD.moduleManager.getModule(HUD.class).getState())
             callbackInfo.cancel();
     }
 
     @Inject(method = "renderTooltip", at = @At("HEAD"), cancellable = true)
     private void renderTooltip(ScaledResolution sr, float partialTicks, CallbackInfo callbackInfo) {
-        final HUD hud = (HUD) LiquidBounce.moduleManager.getModule(HUD.class);
+        final HUD hud = (HUD) LiquidHUD.moduleManager.getModule(HUD.class);
 
         if(Minecraft.getMinecraft().getRenderViewEntity() instanceof EntityPlayer && hud.getState() && hud.blackHotbarValue.get()) {
             EntityPlayer entityPlayer = (EntityPlayer) Minecraft.getMinecraft().getRenderViewEntity();
@@ -65,7 +65,7 @@ public abstract class MixinGuiInGame {
             GlStateManager.disableRescaleNormal();
             GlStateManager.disableBlend();
 
-            LiquidBounce.eventManager.callEvent(new Render2DEvent(partialTicks));
+            LiquidHUD.eventManager.callEvent(new Render2DEvent(partialTicks));
             AWTFontRenderer.Companion.garbageCollectionTick();
             callbackInfo.cancel();
         }
@@ -74,7 +74,7 @@ public abstract class MixinGuiInGame {
     @Inject(method = "renderTooltip", at = @At("RETURN"))
     private void renderTooltipPost(ScaledResolution sr, float partialTicks, CallbackInfo callbackInfo) {
         if (!ClassUtils.hasClass("net.labymod.api.LabyModAPI")) {
-            LiquidBounce.eventManager.callEvent(new Render2DEvent(partialTicks));
+            LiquidHUD.eventManager.callEvent(new Render2DEvent(partialTicks));
             AWTFontRenderer.Companion.garbageCollectionTick();
         }
     }

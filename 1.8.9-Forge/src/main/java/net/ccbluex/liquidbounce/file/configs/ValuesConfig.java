@@ -1,5 +1,5 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
@@ -9,12 +9,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.features.module.Module;
-import net.ccbluex.liquidbounce.features.special.AutoReconnect;
 import net.ccbluex.liquidbounce.file.FileConfig;
 import net.ccbluex.liquidbounce.file.FileManager;
-import net.ccbluex.liquidbounce.utils.EntityUtils;
 import net.ccbluex.liquidbounce.value.Value;
 
 import java.io.*;
@@ -51,14 +49,9 @@ public class ValuesConfig extends FileConfig {
             final Map.Entry<String, JsonElement> entry = iterator.next();
 
             if (entry.getKey().equalsIgnoreCase("CommandPrefix")) {
-                LiquidBounce.commandManager.setPrefix(entry.getValue().getAsCharacter());
-            } else if (entry.getKey().equalsIgnoreCase("features")) {
-                JsonObject jsonValue = (JsonObject) entry.getValue();
-
-                if (jsonValue.has("AutoReconnectDelay"))
-                    AutoReconnect.INSTANCE.setDelay(jsonValue.get("AutoReconnectDelay").getAsInt());
+                LiquidHUD.commandManager.setPrefix(entry.getValue().getAsCharacter());
             } else {
-                final Module module = LiquidBounce.moduleManager.getModule(entry.getKey());
+                final Module module = LiquidHUD.moduleManager.getModule(entry.getKey());
 
                 if(module != null) {
                     final JsonObject jsonModule = (JsonObject) entry.getValue();
@@ -82,13 +75,9 @@ public class ValuesConfig extends FileConfig {
     protected void saveConfig() throws IOException {
         final JsonObject jsonObject = new JsonObject();
 
-        jsonObject.addProperty("CommandPrefix", LiquidBounce.commandManager.getPrefix());
+        jsonObject.addProperty("CommandPrefix", LiquidHUD.commandManager.getPrefix());
 
-        final JsonObject jsonFeatures = new JsonObject();
-        jsonFeatures.addProperty("AutoReconnectDelay", AutoReconnect.INSTANCE.getDelay());
-        jsonObject.add("features", jsonFeatures);
-
-        LiquidBounce.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {
+        LiquidHUD.moduleManager.getModules().stream().filter(module -> !module.getValues().isEmpty()).forEach(module -> {
             final JsonObject jsonModule = new JsonObject();
             module.getValues().forEach(value -> jsonModule.add(value.getName(), value.toJson()));
             jsonObject.add(module.getName(), jsonModule);

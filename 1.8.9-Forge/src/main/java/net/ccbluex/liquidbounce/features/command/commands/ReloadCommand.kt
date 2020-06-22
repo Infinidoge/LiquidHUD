@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.features.command.commands
 
-import net.ccbluex.liquidbounce.LiquidBounce
+import net.ccbluex.liquidbounce.LiquidHUD
 import net.ccbluex.liquidbounce.features.command.Command
 import net.ccbluex.liquidbounce.features.command.CommandManager
 import net.ccbluex.liquidbounce.ui.client.clickgui.ClickGui
@@ -18,27 +18,23 @@ class ReloadCommand : Command("reload", arrayOf("configreload")) {
     override fun execute(args: Array<String>) {
         chat("Reloading...")
         chat("§c§lReloading commands...")
-        LiquidBounce.commandManager = CommandManager()
-        LiquidBounce.commandManager.registerCommands()
-        LiquidBounce.isStarting = true
-        for(module in LiquidBounce.moduleManager.modules)
-            LiquidBounce.moduleManager.generateCommand(module)
+        LiquidHUD.commandManager = CommandManager()
+        LiquidHUD.commandManager.registerCommands()
+        LiquidHUD.isStarting = true
+        for(module in LiquidHUD.moduleManager.modules)
+            LiquidHUD.moduleManager.generateCommand(module)
         chat("§c§lReloading fonts...")
         Fonts.loadFonts()
         chat("§c§lReloading modules...")
-        LiquidBounce.fileManager.loadConfig(LiquidBounce.fileManager.modulesConfig)
-        LiquidBounce.isStarting = false
+        LiquidHUD.fileManager.loadConfig(LiquidHUD.fileManager.modulesConfig)
+        LiquidHUD.isStarting = false
         chat("§c§lReloading values...")
-        LiquidBounce.fileManager.loadConfig(LiquidBounce.fileManager.valuesConfig)
-        chat("§c§lReloading accounts...")
-        LiquidBounce.fileManager.loadConfig(LiquidBounce.fileManager.accountsConfig)
-        chat("§c§lReloading friends...")
-        LiquidBounce.fileManager.loadConfig(LiquidBounce.fileManager.friendsConfig)
+        LiquidHUD.fileManager.loadConfig(LiquidHUD.fileManager.valuesConfig)
         chat("§c§lReloading HUD...")
-        LiquidBounce.fileManager.loadConfig(LiquidBounce.fileManager.hudConfig)
+        LiquidHUD.fileManager.loadConfig(LiquidHUD.fileManager.hudConfig)
         chat("§c§lReloading ClickGUI...")
-        LiquidBounce.clickGui = ClickGui()
-        LiquidBounce.fileManager.loadConfig(LiquidBounce.fileManager.clickGuiConfig)
+        LiquidHUD.clickGui = ClickGui()
+        LiquidHUD.fileManager.loadConfig(LiquidHUD.fileManager.clickGuiConfig)
         chat("Reloaded.")
     }
 }

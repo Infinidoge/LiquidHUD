@@ -1,11 +1,11 @@
 /*
- * LiquidBounce Hacked Client
+ * LiquidHUD Hacked Client
  * A free open source mixin-based injection hacked client for Minecraft using Minecraft Forge.
  * https://github.com/CCBlueX/LiquidBounce/
  */
 package net.ccbluex.liquidbounce.file.configs;
 
-import net.ccbluex.liquidbounce.LiquidBounce;
+import net.ccbluex.liquidbounce.LiquidHUD;
 import net.ccbluex.liquidbounce.file.FileConfig;
 import net.ccbluex.liquidbounce.ui.client.hud.Config;
 import org.apache.commons.io.FileUtils;
@@ -33,8 +33,8 @@ public class HudConfig extends FileConfig {
      */
     @Override
     protected void loadConfig() throws IOException {
-        LiquidBounce.hud.clearElements();
-        LiquidBounce.hud = new Config(FileUtils.readFileToString(getFile())).toHUD();
+        LiquidHUD.hud.clearElements();
+        LiquidHUD.hud = new Config(FileUtils.readFileToString(getFile())).toHUD();
     }
 
     /**
@@ -45,7 +45,7 @@ public class HudConfig extends FileConfig {
     @Override
     protected void saveConfig() throws IOException {
         final PrintWriter printWriter = new PrintWriter(new FileWriter(getFile()));
-        printWriter.println(new Config(LiquidBounce.hud).toJson());
+        printWriter.println(new Config(LiquidHUD.hud).toJson());
         printWriter.close();
     }
 }
