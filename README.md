@@ -3,8 +3,8 @@
 A fork of the hack-client LiquidBounce, which intends to only keep the forge installation and Custom HUD
 
 ## Changes this fork makes
-* Removes all hacks
-* Removes Vanilla version
+* Removes all hacks, keeping only the Custom HUD
+* Removes Vanilla version entirely
 
 # Readme from the original client, LiquidBounce
 Website: https://liquidbounce.net \
