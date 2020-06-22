@@ -1,4 +1,5 @@
 # LiquidHUD
+![Java CI with Gradle](https://github.com/Infinidoge/LiquidHUD/workflows/Java%20CI%20with%20Gradle/badge.svg)
 A fork of the hack-client LiquidBounce, which intends to only keep the forge installation and Custom HUD
 
 ## Changes this fork makes
