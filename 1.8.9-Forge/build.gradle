@@ -117,8 +117,7 @@ jar {
             'FMLCorePluginContainsFMLMod': 'net.ccbluex.liquidbounce.injection.forge.MixinLoader',
             'FMLCorePlugin': 'net.ccbluex.liquidbounce.injection.forge.TransformerLoader',
             'FMLAT': 'liquidbounce_at.cfg',
-            'Manifest-Version': 1.0,
-            'Main-Class': 'net.ccbluex.liquidinstruction.LiquidInstructionKt'
+            'Manifest-Version': 1.0
     )
 }
 
@@ -134,9 +133,6 @@ shadowJar {
         include(dependency('com.kohlschutter.junixsocket:junixsocket-native-common'))
 
         include(dependency('org.jetbrains.kotlin:kotlin-stdlib'))
-
-        include(dependency('com.github.TheAltening:API-Java'))
-        include(dependency('com.github.TheAltening:API-Java-AuthLib'))
     }
 
     exclude 'dummyThing'
